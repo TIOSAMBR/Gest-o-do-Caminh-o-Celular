@@ -2695,3 +2695,276 @@ function limparCSV(valor) {
         .replace(/\n/g, " ");
 
 }
+
+// =====================================================
+// BACKUP DOS DADOS
+// =====================================================
+
+function fazerBackup() {
+
+    const backup = {
+
+        versao: "1.0",
+
+        dataBackup:
+            new Date().toISOString(),
+
+        configuracao:
+            configuracao,
+
+        fretes:
+            fretes,
+
+        despesas:
+            despesas
+
+    };
+
+
+    const dados =
+        JSON.stringify(
+            backup,
+            null,
+            2
+        );
+
+
+    const blob =
+        new Blob(
+            [dados],
+            {
+                type:
+                    "application/json"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+
+    const hoje =
+        new Date();
+
+
+    const ano =
+        hoje.getFullYear();
+
+
+    const mes =
+        String(
+            hoje.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    const dia =
+        String(
+            hoje.getDate()
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    link.href =
+        url;
+
+
+    link.download =
+        `backup-caminhao-${ano}-${mes}-${dia}.json`;
+
+
+    document.body.appendChild(
+        link
+    );
+
+
+    link.click();
+
+
+    document.body.removeChild(
+        link
+    );
+
+
+    URL.revokeObjectURL(
+        url
+    );
+
+
+    alert(
+        "✅ Backup realizado com sucesso!"
+    );
+
+}
+
+
+// =====================================================
+// RESTAURAR BACKUP
+// =====================================================
+
+function restaurarBackup(event) {
+
+    const arquivo =
+        event.target.files[0];
+
+
+    if (!arquivo)
+        return;
+
+
+    if (
+        !confirm(
+            "⚠️ Restaurar este backup irá substituir os dados atuais. Deseja continuar?"
+        )
+    ) {
+
+        event.target.value = "";
+
+        return;
+
+    }
+
+
+    const leitor =
+        new FileReader();
+
+
+    leitor.onload =
+        function(e) {
+
+            try {
+
+                const backup =
+                    JSON.parse(
+                        e.target.result
+                    );
+
+
+                // =====================================
+                // VALIDAÇÃO
+                // =====================================
+
+                if (
+                    !backup ||
+                    !Array.isArray(
+                        backup.fretes
+                    ) ||
+                    !Array.isArray(
+                        backup.despesas
+                    ) ||
+                    !backup.configuracao
+                ) {
+
+                    throw new Error(
+                        "Arquivo de backup inválido."
+                    );
+
+                }
+
+
+                // =====================================
+                // RESTAURAR DADOS
+                // =====================================
+
+                configuracao =
+                    backup.configuracao;
+
+
+                fretes =
+                    backup.fretes;
+
+
+                despesas =
+                    backup.despesas;
+
+
+                // =====================================
+                // SALVAR NO LOCALSTORAGE
+                // =====================================
+
+                localStorage.setItem(
+
+                    "configuracaoCaminhao",
+
+                    JSON.stringify(
+                        configuracao
+                    )
+
+                );
+
+
+                localStorage.setItem(
+
+                    "fretesCaminhao",
+
+                    JSON.stringify(
+                        fretes
+                    )
+
+                );
+
+
+                localStorage.setItem(
+
+                    "despesasCaminhao",
+
+                    JSON.stringify(
+                        despesas
+                    )
+
+                );
+
+
+                // =====================================
+                // ATUALIZAR TELA
+                // =====================================
+
+                carregarConfiguracao();
+
+                atualizarTudo();
+
+
+                alert(
+                    "✅ Backup restaurado com sucesso!"
+                );
+
+
+            }
+
+            catch(error) {
+
+                console.error(
+                    "Erro ao restaurar backup:",
+                    error
+                );
+
+
+                alert(
+                    "❌ Não foi possível restaurar o backup. Verifique se o arquivo é válido."
+                );
+
+            }
+
+
+            event.target.value = "";
+
+        };
+
+
+    leitor.readAsText(
+        arquivo
+    );
+
+}

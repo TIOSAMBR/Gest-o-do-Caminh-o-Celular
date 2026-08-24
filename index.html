@@ -3,28 +3,34 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <title>Gestão do Caminhão</title>
 
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚚</text></svg>">
+
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🚚%3C/text%3E%3C/svg%3E">
 </head>
 
 <body>
 
 <header class="topbar">
 
-    <div>
-        <h1>🚚 Gestão do Caminhão</h1>
-        <p>Controle seus fretes, custos e resultados</p>
+    <div class="topbar-brand">
+
+        <div>
+            <h1>🚚 Gestão do Caminhão</h1>
+            <p>Controle seus fretes, custos e resultados</p>
+        </div>
+
     </div>
 
     <button
         id="themeToggle"
         class="theme-toggle"
-        onclick="alternarTema()">
+        onclick="alternarTema()"
+        type="button"
+    >
         🌙 Modo escuro
     </button>
 
@@ -32,7 +38,6 @@
 
 
 <main class="container">
-
 
     <!-- =====================================================
          DASHBOARD
@@ -56,9 +61,9 @@
         </div>
 
         <div class="card gastos">
-            <span>Tatal Gasto</span>
+            <span>Total gasto</span>
             <strong id="totalGastos">R$ 0,00</strong>
-         </div>
+        </div>
 
         <div class="card lucro">
             <span>Lucro</span>
@@ -94,7 +99,7 @@
 
     <section class="panel">
 
-        <div class="current-month-header">
+        <div class="panel-header">
 
             <div>
                 <h2>📊 Resumo mensal</h2>
@@ -109,7 +114,8 @@
 
                 <input
                     type="month"
-                    id="mesPrincipal">
+                    id="mesPrincipal"
+                >
 
             </div>
 
@@ -137,113 +143,163 @@
         <div class="form-grid">
 
             <div class="field">
-                <label>Data</label>
+
+                <label for="data">
+                    Data
+                </label>
 
                 <input
                     type="date"
-                    id="data">
+                    id="data"
+                >
+
             </div>
 
 
             <div class="field">
-                <label>Cliente</label>
+
+                <label for="cliente">
+                    Cliente
+                </label>
 
                 <input
                     type="text"
                     id="cliente"
-                    placeholder="Nome do cliente">
+                    placeholder="Nome do cliente"
+                >
+
             </div>
 
 
             <div class="field">
-                <label>Origem</label>
+
+                <label for="origem">
+                    Origem
+                </label>
 
                 <input
                     type="text"
                     id="origem"
-                    placeholder="Cidade de origem">
+                    placeholder="Cidade de origem"
+                >
+
             </div>
 
 
             <div class="field">
-                <label>Destino</label>
+
+                <label for="destino">
+                    Destino
+                </label>
 
                 <input
                     type="text"
                     id="destino"
-                    placeholder="Cidade de destino">
+                    placeholder="Cidade de destino"
+                >
+
             </div>
 
 
             <div class="field">
-                <label>Quilometragem</label>
+
+                <label for="km">
+                    Quilometragem
+                </label>
 
                 <input
                     type="number"
                     id="km"
                     placeholder="Ex.: 250"
                     min="0"
-                    step="0.1">
+                    step="0.1"
+                >
+
             </div>
 
 
             <div class="field">
-                <label>Valor do frete</label>
+
+                <label for="valorFrete">
+                    Valor do frete
+                </label>
 
                 <input
                     type="number"
                     id="valorFrete"
                     placeholder="R$ 0,00"
                     min="0"
-                    step="0.01">
+                    step="0.01"
+                >
+
             </div>
 
 
             <div class="field">
-                <label>Pedágio</label>
+
+                <label for="pedagio">
+                    Pedágio
+                </label>
 
                 <input
                     type="number"
                     id="pedagio"
                     placeholder="R$ 0,00"
                     min="0"
-                    step="0.01">
+                    step="0.01"
+                >
+
             </div>
 
 
             <div class="field">
-                <label>Ajudantes</label>
+
+                <label for="ajudantes">
+                    Ajudantes
+                </label>
 
                 <input
                     type="number"
                     id="ajudantes"
                     placeholder="R$ 0,00"
                     min="0"
-                    step="0.01">
+                    step="0.01"
+                >
+
             </div>
 
 
             <div class="field">
-                <label>Alimentação</label>
+
+                <label for="alimentacao">
+                    Alimentação
+                </label>
 
                 <input
                     type="number"
                     id="alimentacao"
                     placeholder="R$ 0,00"
                     min="0"
-                    step="0.01">
+                    step="0.01"
+                >
+
             </div>
 
 
             <div class="field">
-                <label>Outras despesas</label>
+
+                <label for="outrasDespesas">
+                    Outras despesas
+                </label>
 
                 <input
                     type="number"
                     id="outrasDespesas"
                     placeholder="R$ 0,00"
                     min="0"
-                    step="0.01">
+                    step="0.01"
+                >
+
             </div>
 
         </div>
@@ -254,33 +310,49 @@
         <div class="preview">
 
             <div>
+
                 <span>Combustível</span>
+
                 <strong id="previewCombustivel">
                     R$ 0,00
                 </strong>
+
             </div>
 
+
             <div>
+
                 <span>Custo total</span>
+
                 <strong id="previewCustos">
                     R$ 0,00
                 </strong>
+
             </div>
 
+
             <div>
+
                 <span>Lucro</span>
+
                 <strong
                     id="previewLucro"
-                    class="positivo">
+                    class="positivo"
+                >
                     R$ 0,00
                 </strong>
+
             </div>
 
+
             <div>
+
                 <span>Margem</span>
+
                 <strong id="previewMargem">
                     0%
                 </strong>
+
             </div>
 
         </div>
@@ -288,10 +360,10 @@
 
         <button
             class="btn success btn-full"
-            onclick="registrarFrete()">
-
+            onclick="registrarFrete()"
+            type="button"
+        >
             🚚 Registrar Frete
-
         </button>
 
     </section>
@@ -316,62 +388,98 @@
         <div class="form-grid">
 
             <div class="field">
-                <label>Consumo (km/l)</label>
+
+                <label for="consumo">
+                    Consumo (km/l)
+                </label>
 
                 <input
                     type="number"
                     id="consumo"
-                    step="0.1">
+                    step="0.1"
+                    min="0"
+                >
+
             </div>
 
 
             <div class="field">
-                <label>Diesel (R$/litro)</label>
+
+                <label for="diesel">
+                    Diesel (R$/litro)
+                </label>
 
                 <input
                     type="number"
                     id="diesel"
-                    step="0.01">
+                    step="0.01"
+                    min="0"
+                >
+
             </div>
 
 
             <div class="field">
-                <label>Manutenção mensal</label>
+
+                <label for="manutencao">
+                    Manutenção mensal
+                </label>
 
                 <input
                     type="number"
                     id="manutencao"
-                    step="0.01">
+                    step="0.01"
+                    min="0"
+                >
+
             </div>
 
 
             <div class="field">
-                <label>Seguro mensal</label>
+
+                <label for="seguro">
+                    Seguro mensal
+                </label>
 
                 <input
                     type="number"
                     id="seguro"
-                    step="0.01">
+                    step="0.01"
+                    min="0"
+                >
+
             </div>
 
 
             <div class="field">
-                <label>IPVA anual</label>
+
+                <label for="ipva">
+                    IPVA anual
+                </label>
 
                 <input
                     type="number"
                     id="ipva"
-                    step="0.01">
+                    step="0.01"
+                    min="0"
+                >
+
             </div>
 
 
             <div class="field">
-                <label>Pneus mensal</label>
+
+                <label for="pneus">
+                    Pneus mensal
+                </label>
 
                 <input
                     type="number"
                     id="pneus"
-                    step="0.01">
+                    step="0.01"
+                    min="0"
+                >
+
             </div>
 
         </div>
@@ -379,10 +487,10 @@
 
         <button
             class="btn primary btn-full"
-            onclick="salvarConfiguracao()">
-
+            onclick="salvarConfiguracao()"
+            type="button"
+        >
             💾 Salvar configuração
-
         </button>
 
     </section>
@@ -408,18 +516,23 @@
 
             <div class="field">
 
-                <label>Data</label>
+                <label for="dataDespesa">
+                    Data
+                </label>
 
                 <input
                     type="date"
-                    id="dataDespesa">
+                    id="dataDespesa"
+                >
 
             </div>
 
 
             <div class="field">
 
-                <label>Tipo</label>
+                <label for="tipoDespesa">
+                    Tipo
+                </label>
 
                 <select id="tipoDespesa">
 
@@ -447,6 +560,10 @@
                         Alimentação
                     </option>
 
+                    <option value="Lavagem">
+                        Lavagem
+                    </option>
+
                     <option value="Outros">
                         Outros
                     </option>
@@ -458,26 +575,32 @@
 
             <div class="field">
 
-                <label>Descrição</label>
+                <label for="descricaoDespesa">
+                    Descrição
+                </label>
 
                 <input
                     type="text"
                     id="descricaoDespesa"
-                    placeholder="Descrição da despesa">
+                    placeholder="Descrição da despesa"
+                >
 
             </div>
 
 
             <div class="field">
 
-                <label>Valor</label>
+                <label for="valorDespesa">
+                    Valor
+                </label>
 
                 <input
                     type="number"
                     id="valorDespesa"
                     placeholder="R$ 0,00"
                     min="0"
-                    step="0.01">
+                    step="0.01"
+                >
 
             </div>
 
@@ -486,10 +609,10 @@
 
         <button
             class="btn danger btn-full"
-            onclick="registrarDespesa()">
-
+            onclick="registrarDespesa()"
+            type="button"
+        >
             💰 Registrar despesa
-
         </button>
 
     </section>
@@ -504,93 +627,136 @@
         <div class="panel-header">
 
             <div>
+
                 <h2>📈 Análise mensal</h2>
-                <p>Veja os principais indicadores</p>
+
+                <p>
+                    Veja os principais indicadores
+                </p>
+
             </div>
+
 
             <div class="month-selector">
 
-                <label>
+                <label for="mesAnalise">
                     Mês
                 </label>
 
                 <input
                     type="month"
-                    id="mesAnalise">
+                    id="mesAnalise"
+                >
 
             </div>
 
         </div>
 
+
+        <!-- CARDS MENSAIS -->
 
         <div class="monthly-cards">
 
             <div class="mini-card">
+
                 <span>Faturamento</span>
+
                 <strong id="mesFaturamento">
                     R$ 0,00
                 </strong>
+
             </div>
 
+
             <div class="mini-card">
+
                 <span>Custos</span>
+
                 <strong id="mesCustosFretes">
                     R$ 0,00
                 </strong>
+
             </div>
 
+
             <div class="mini-card">
+
                 <span>Despesas</span>
+
                 <strong id="mesDespesas">
                     R$ 0,00
                 </strong>
+
             </div>
 
+
             <div class="mini-card lucro">
+
                 <span>Lucro</span>
+
                 <strong id="mesLucro">
                     R$ 0,00
                 </strong>
+
             </div>
 
+
             <div class="mini-card">
+
                 <span>Margem</span>
+
                 <strong id="mesMargem">
                     0%
                 </strong>
+
             </div>
 
+
             <div class="mini-card">
+
                 <span>KM</span>
+
                 <strong id="mesKm">
                     0 km
                 </strong>
+
             </div>
 
+
             <div class="mini-card">
+
                 <span>Fretes</span>
+
                 <strong id="mesQuantidade">
                     0
                 </strong>
+
             </div>
 
+
             <div class="mini-card">
+
                 <span>Lucro/KM</span>
+
                 <strong id="mesLucroKm">
                     R$ 0,00
                 </strong>
+
             </div>
 
         </div>
 
 
-        <!-- GRÁFICO -->
+        <!-- GRÁFICO + RANKING -->
 
         <div class="monthly-content">
 
+
+            <!-- GRÁFICO -->
+
             <div class="chart-box">
 
-                <h3>Gráfico</h3>
+                <h3>📊 Resultado do mês</h3>
 
                 <div class="chart">
 
@@ -600,8 +766,8 @@
 
                             <div
                                 class="bar faturamento-bar"
-                                id="barFaturamento">
-                            </div>
+                                id="barFaturamento"
+                            ></div>
 
                             <span>Receita</span>
 
@@ -612,8 +778,8 @@
 
                             <div
                                 class="bar custo-bar"
-                                id="barCustos">
-                            </div>
+                                id="barCustos"
+                            ></div>
 
                             <span>Custos</span>
 
@@ -624,8 +790,8 @@
 
                             <div
                                 class="bar custo-bar"
-                                id="barDespesas">
-                            </div>
+                                id="barDespesas"
+                            ></div>
 
                             <span>Despesas</span>
 
@@ -636,8 +802,8 @@
 
                             <div
                                 class="bar lucro-bar"
-                                id="barLucro">
-                            </div>
+                                id="barLucro"
+                            ></div>
 
                             <span>Lucro</span>
 
@@ -674,8 +840,13 @@
         <div class="panel-header">
 
             <div>
+
                 <h2>⚖️ Comparar meses</h2>
-                <p>Compare seus resultados</p>
+
+                <p>
+                    Compare seus resultados
+                </p>
+
             </div>
 
         </div>
@@ -683,15 +854,17 @@
 
         <div class="comparison-selectors">
 
+
             <div class="month-selector">
 
-                <label>
+                <label for="mesComparacao1">
                     Primeiro mês
                 </label>
 
                 <input
                     type="month"
-                    id="mesComparacao1">
+                    id="mesComparacao1"
+                >
 
             </div>
 
@@ -703,13 +876,14 @@
 
             <div class="month-selector">
 
-                <label>
+                <label for="mesComparacao2">
                     Segundo mês
                 </label>
 
                 <input
                     type="month"
-                    id="mesComparacao2">
+                    id="mesComparacao2"
+                >
 
             </div>
 
@@ -734,7 +908,9 @@
                             Mês 2
                         </th>
 
-                        <th>Diferença</th>
+                        <th>
+                            Diferença
+                        </th>
 
                     </tr>
 
@@ -743,54 +919,153 @@
 
                 <tbody>
 
-                    <tr>
-                        <td>Faturamento</td>
-                        <td id="comparacaoFaturamento1">R$ 0,00</td>
-                        <td id="comparacaoFaturamento2">R$ 0,00</td>
-                        <td id="diferencaFaturamento">R$ 0,00</td>
-                    </tr>
 
                     <tr>
-                        <td>Custos</td>
-                        <td id="comparacaoCustos1">R$ 0,00</td>
-                        <td id="comparacaoCustos2">R$ 0,00</td>
-                        <td id="diferencaCustos">R$ 0,00</td>
+
+                        <td>
+                            Faturamento
+                        </td>
+
+                        <td id="comparacaoFaturamento1">
+                            R$ 0,00
+                        </td>
+
+                        <td id="comparacaoFaturamento2">
+                            R$ 0,00
+                        </td>
+
+                        <td id="diferencaFaturamento">
+                            R$ 0,00
+                        </td>
+
                     </tr>
 
-                    <tr>
-                        <td>Despesas</td>
-                        <td id="comparacaoDespesas1">R$ 0,00</td>
-                        <td id="comparacaoDespesas2">R$ 0,00</td>
-                        <td id="diferencaDespesas">R$ 0,00</td>
-                    </tr>
 
                     <tr>
-                        <td>Lucro</td>
-                        <td id="comparacaoLucro1">R$ 0,00</td>
-                        <td id="comparacaoLucro2">R$ 0,00</td>
-                        <td id="diferencaLucro">R$ 0,00</td>
+
+                        <td>
+                            Custos
+                        </td>
+
+                        <td id="comparacaoCustos1">
+                            R$ 0,00
+                        </td>
+
+                        <td id="comparacaoCustos2">
+                            R$ 0,00
+                        </td>
+
+                        <td id="diferencaCustos">
+                            R$ 0,00
+                        </td>
+
                     </tr>
 
-                    <tr>
-                        <td>KM</td>
-                        <td id="comparacaoKm1">0 km</td>
-                        <td id="comparacaoKm2">0 km</td>
-                        <td id="diferencaKm">0 km</td>
-                    </tr>
 
                     <tr>
-                        <td>Fretes</td>
-                        <td id="comparacaoFretes1">0</td>
-                        <td id="comparacaoFretes2">0</td>
-                        <td id="diferencaFretes">0</td>
+
+                        <td>
+                            Despesas
+                        </td>
+
+                        <td id="comparacaoDespesas1">
+                            R$ 0,00
+                        </td>
+
+                        <td id="comparacaoDespesas2">
+                            R$ 0,00
+                        </td>
+
+                        <td id="diferencaDespesas">
+                            R$ 0,00
+                        </td>
+
                     </tr>
 
+
                     <tr>
-                        <td>Margem</td>
-                        <td id="comparacaoMargem1">0%</td>
-                        <td id="comparacaoMargem2">0%</td>
-                        <td id="diferencaMargem">0 p.p.</td>
+
+                        <td>
+                            Lucro
+                        </td>
+
+                        <td id="comparacaoLucro1">
+                            R$ 0,00
+                        </td>
+
+                        <td id="comparacaoLucro2">
+                            R$ 0,00
+                        </td>
+
+                        <td id="diferencaLucro">
+                            R$ 0,00
+                        </td>
+
                     </tr>
+
+
+                    <tr>
+
+                        <td>
+                            KM
+                        </td>
+
+                        <td id="comparacaoKm1">
+                            0 km
+                        </td>
+
+                        <td id="comparacaoKm2">
+                            0 km
+                        </td>
+
+                        <td id="diferencaKm">
+                            0 km
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            Fretes
+                        </td>
+
+                        <td id="comparacaoFretes1">
+                            0
+                        </td>
+
+                        <td id="comparacaoFretes2">
+                            0
+                        </td>
+
+                        <td id="diferencaFretes">
+                            0
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            Margem
+                        </td>
+
+                        <td id="comparacaoMargem1">
+                            0%
+                        </td>
+
+                        <td id="comparacaoMargem2">
+                            0%
+                        </td>
+
+                        <td id="diferencaMargem">
+                            0 p.p.
+                        </td>
+
+                    </tr>
+
 
                 </tbody>
 
@@ -801,10 +1076,9 @@
 
         <div
             class="comparison-result"
-            id="resumoComparacao">
-
+            id="resumoComparacao"
+        >
             Selecione os meses para comparar.
-
         </div>
 
     </section>
@@ -819,16 +1093,22 @@
         <div class="panel-header">
 
             <div>
+
                 <h2>📋 Histórico de fretes</h2>
-                <p>Todos os fretes registrados</p>
+
+                <p>
+                    Todos os fretes registrados
+                </p>
+
             </div>
+
 
             <button
                 class="btn secondary"
-                onclick="exportarCSV()">
-
+                onclick="exportarCSV()"
+                type="button"
+            >
                 📥 Exportar CSV
-
             </button>
 
         </div>
@@ -851,11 +1131,12 @@
                         <th>Custo</th>
                         <th>Lucro</th>
                         <th>Margem</th>
-                        <th></th>
+                        <th>Ações</th>
 
                     </tr>
 
                 </thead>
+
 
                 <tbody id="tabelaFretes"></tbody>
 
@@ -866,10 +1147,9 @@
 
         <div
             id="semFretes"
-            class="empty">
-
+            class="empty"
+        >
             Nenhum frete registrado.
-
         </div>
 
     </section>
@@ -884,8 +1164,13 @@
         <div class="panel-header">
 
             <div>
+
                 <h2>💸 Histórico de despesas</h2>
-                <p>Despesas registradas</p>
+
+                <p>
+                    Despesas registradas
+                </p>
+
             </div>
 
         </div>
@@ -903,11 +1188,12 @@
                         <th>Tipo</th>
                         <th>Descrição</th>
                         <th>Valor</th>
-                        <th></th>
+                        <th>Ações</th>
 
                     </tr>
 
                 </thead>
+
 
                 <tbody id="tabelaDespesas"></tbody>
 
@@ -918,9 +1204,73 @@
 
         <div
             id="semDespesas"
-            class="empty">
-
+            class="empty"
+        >
             Nenhuma despesa registrada.
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         BACKUP
+    ====================================================== -->
+
+    <section class="panel">
+
+        <div class="backup-box">
+
+            <div class="backup-header">
+
+                <div>
+
+                    <h3>💾 Backup dos dados</h3>
+
+                    <p>
+                        Salve seus dados para não perder seu histórico.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="backup-buttons">
+
+                <button
+                    type="button"
+                    class="btn primary"
+                    onclick="fazerBackup()"
+                >
+                    📥 Fazer backup
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn secondary"
+                    onclick="document.getElementById('arquivoBackup').click()"
+                >
+                    📤 Restaurar backup
+                </button>
+
+            </div>
+
+
+            <input
+                type="file"
+                id="arquivoBackup"
+                accept=".json,application/json"
+                style="display:none"
+                onchange="restaurarBackup(event)"
+            >
+
+
+            <p class="backup-info">
+
+                O backup contém seus fretes, despesas e configurações do caminhão.
+
+            </p>
 
         </div>
 
@@ -929,9 +1279,13 @@
 </main>
 
 
+<!-- =====================================================
+     FOOTER
+====================================================== -->
+
 <footer>
 
-    Gestão do Caminhão © 2026
+    Gestão do Caminhão © 2026 - Samuel Toledo 🚀
 
 </footer>
 
