@@ -1,5 +1,6 @@
 // =====================================================
-// GESTÃO DO CAMINHÃO
+// 🚚 GESTÃO DO CAMINHÃO
+// JavaScript principal
 // =====================================================
 
 
@@ -9,34 +10,26 @@
 
 let configuracao =
     JSON.parse(
-        localStorage.getItem(
-            "configuracaoCaminhao"
-        )
+        localStorage.getItem("configuracaoCaminhao")
     ) || {
-
         consumo: 7,
         diesel: 6.20,
         manutencao: 0,
         seguro: 0,
         ipva: 0,
         pneus: 0
-
     };
 
 
 let fretes =
     JSON.parse(
-        localStorage.getItem(
-            "fretesCaminhao"
-        )
+        localStorage.getItem("fretesCaminhao")
     ) || [];
 
 
 let despesas =
     JSON.parse(
-        localStorage.getItem(
-            "despesasCaminhao"
-        )
+        localStorage.getItem("despesasCaminhao")
     ) || [];
 
 
@@ -44,60 +37,61 @@ let despesas =
 // INICIALIZAÇÃO
 // =====================================================
 
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
+document.addEventListener("DOMContentLoaded", () => {
 
-        carregarConfiguracao();
+    carregarConfiguracao();
 
-        definirDataAtual();
+    definirDataAtual();
 
-        definirDataDespesa();
+    definirDataDespesa();
 
-        definirMesAtual();
+    definirMesAtual();
 
-        carregarTema();
+    carregarTema();
 
-        atualizarTudo();
+    atualizarTudo();
 
-        adicionarEventosPreview();
+    adicionarEventosPreview();
 
+    inicializarEventos();
 
-        const mesPrincipal =
-            document.getElementById(
-                "mesPrincipal"
-            );
+    inicializarComparacao();
 
-        if (mesPrincipal) {
-
-            mesPrincipal.addEventListener(
-                "change",
-                atualizarPainelPrincipal
-            );
-
-        }
+});
 
 
-        const mesAnalise =
-            document.getElementById(
-                "mesAnalise"
-            );
+// =====================================================
+// EVENTOS
+// =====================================================
 
-        if (mesAnalise) {
+function inicializarEventos() {
 
-            mesAnalise.addEventListener(
-                "change",
-                atualizarAnaliseMensal
-            );
+    const mesPrincipal =
+        document.getElementById("mesPrincipal");
 
-        }
+    if (mesPrincipal) {
 
-
-        // Inicializa comparação
-        inicializarComparacao();
+        mesPrincipal.addEventListener(
+            "change",
+            atualizarPainelPrincipal
+        );
 
     }
-);
+
+
+    const mesAnalise =
+        document.getElementById("mesAnalise");
+
+    if (mesAnalise) {
+
+        mesAnalise.addEventListener(
+            "change",
+            atualizarAnaliseMensal
+        );
+
+    }
+
+}
 
 
 // =====================================================
@@ -127,65 +121,29 @@ function atualizarTudo() {
 
 function carregarConfiguracao() {
 
-    const consumo =
-        document.getElementById(
-            "consumo"
-        );
-
-    const diesel =
-        document.getElementById(
-            "diesel"
-        );
-
-    const manutencao =
-        document.getElementById(
-            "manutencao"
-        );
-
-    const seguro =
-        document.getElementById(
-            "seguro"
-        );
-
-    const ipva =
-        document.getElementById(
-            "ipva"
-        );
-
-    const pneus =
-        document.getElementById(
-            "pneus"
-        );
+    const campos = [
+        "consumo",
+        "diesel",
+        "manutencao",
+        "seguro",
+        "ipva",
+        "pneus"
+    ];
 
 
-    if (consumo)
-        consumo.value =
-            configuracao.consumo;
+    campos.forEach(id => {
 
+        const campo =
+            document.getElementById(id);
 
-    if (diesel)
-        diesel.value =
-            configuracao.diesel;
+        if (campo) {
 
+            campo.value =
+                configuracao[id] || 0;
 
-    if (manutencao)
-        manutencao.value =
-            configuracao.manutencao;
+        }
 
-
-    if (seguro)
-        seguro.value =
-            configuracao.seguro;
-
-
-    if (ipva)
-        ipva.value =
-            configuracao.ipva;
-
-
-    if (pneus)
-        pneus.value =
-            configuracao.pneus;
+    });
 
 }
 
@@ -198,42 +156,28 @@ function salvarConfiguracao() {
 
     configuracao = {
 
-        consumo:
-            numero("consumo"),
+        consumo: numero("consumo"),
 
-        diesel:
-            numero("diesel"),
+        diesel: numero("diesel"),
 
-        manutencao:
-            numero("manutencao"),
+        manutencao: numero("manutencao"),
 
-        seguro:
-            numero("seguro"),
+        seguro: numero("seguro"),
 
-        ipva:
-            numero("ipva"),
+        ipva: numero("ipva"),
 
-        pneus:
-            numero("pneus")
+        pneus: numero("pneus")
 
     };
 
 
     localStorage.setItem(
         "configuracaoCaminhao",
-        JSON.stringify(
-            configuracao
-        )
+        JSON.stringify(configuracao)
     );
 
 
-    atualizarPreview();
-
-    atualizarPainelPrincipal();
-
-    atualizarAnaliseMensal();
-
-    atualizarComparacao();
+    atualizarTudo();
 
 
     alert(
@@ -249,22 +193,15 @@ function salvarConfiguracao() {
 
 function obterMesAtual() {
 
-    const hoje =
-        new Date();
-
+    const hoje = new Date();
 
     const ano =
         hoje.getFullYear();
 
-
     const mes =
         String(
             hoje.getMonth() + 1
-        ).padStart(
-            2,
-            "0"
-        );
-
+        ).padStart(2, "0");
 
     return `${ano}-${mes}`;
 
@@ -293,14 +230,47 @@ function definirMesAtual() {
         );
 
 
-    if (mesPrincipal)
+    if (mesPrincipal) {
+
         mesPrincipal.value =
             mes;
 
+    }
 
-    if (mesAnalise)
+
+    if (mesAnalise) {
+
         mesAnalise.value =
             mes;
+
+    }
+
+}
+
+
+// =====================================================
+// DEFINIR DATA
+// =====================================================
+
+function dataHoje() {
+
+    const hoje =
+        new Date();
+
+    const ano =
+        hoje.getFullYear();
+
+    const mes =
+        String(
+            hoje.getMonth() + 1
+        ).padStart(2, "0");
+
+    const dia =
+        String(
+            hoje.getDate()
+        ).padStart(2, "0");
+
+    return `${ano}-${mes}-${dia}`;
 
 }
 
@@ -312,43 +282,15 @@ function definirMesAtual() {
 function definirDataAtual() {
 
     const campo =
-        document.getElementById(
-            "data"
-        );
+        document.getElementById("data");
 
 
-    if (!campo)
-        return;
+    if (campo) {
 
+        campo.value =
+            dataHoje();
 
-    const hoje =
-        new Date();
-
-
-    const ano =
-        hoje.getFullYear();
-
-
-    const mes =
-        String(
-            hoje.getMonth() + 1
-        ).padStart(
-            2,
-            "0"
-        );
-
-
-    const dia =
-        String(
-            hoje.getDate()
-        ).padStart(
-            2,
-            "0"
-        );
-
-
-    campo.value =
-        `${ano}-${mes}-${dia}`;
+    }
 
 }
 
@@ -365,38 +307,12 @@ function definirDataDespesa() {
         );
 
 
-    if (!campo)
-        return;
+    if (campo) {
 
+        campo.value =
+            dataHoje();
 
-    const hoje =
-        new Date();
-
-
-    const ano =
-        hoje.getFullYear();
-
-
-    const mes =
-        String(
-            hoje.getMonth() + 1
-        ).padStart(
-            2,
-            "0"
-        );
-
-
-    const dia =
-        String(
-            hoje.getDate()
-        ).padStart(
-            2,
-            "0"
-        );
-
-
-    campo.value =
-        `${ano}-${mes}-${dia}`;
+    }
 
 }
 
@@ -415,15 +331,25 @@ function numero(id) {
         return 0;
 
 
-    const valor =
-        parseFloat(
-            elemento.value
-        );
+    let valor =
+        String(
+            elemento.value || ""
+        ).trim();
 
 
-    return isNaN(valor)
-        ? 0
-        : valor;
+    valor =
+        valor.replace(",", ".");
+
+
+    const numeroConvertido =
+        parseFloat(valor);
+
+
+    return Number.isFinite(
+        numeroConvertido
+    )
+        ? numeroConvertido
+        : 0;
 
 }
 
@@ -439,10 +365,8 @@ function dinheiro(valor) {
     ).toLocaleString(
         "pt-BR",
         {
-            style:
-                "currency",
-            currency:
-                "BRL"
+            style: "currency",
+            currency: "BRL"
         }
     );
 
@@ -460,11 +384,8 @@ function porcentagem(valor) {
     ).toLocaleString(
         "pt-BR",
         {
-            minimumFractionDigits:
-                1,
-
-            maximumFractionDigits:
-                1
+            minimumFractionDigits: 1,
+            maximumFractionDigits: 1
         }
     ) + "%";
 
@@ -472,7 +393,7 @@ function porcentagem(valor) {
 
 
 // =====================================================
-// NÚMERO
+// NÚMERO FORMATADO
 // =====================================================
 
 function formatarNumero(valor) {
@@ -482,11 +403,8 @@ function formatarNumero(valor) {
     ).toLocaleString(
         "pt-BR",
         {
-            minimumFractionDigits:
-                0,
-
-            maximumFractionDigits:
-                1
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 1
         }
     );
 
@@ -507,9 +425,7 @@ function formatarData(data) {
         data.split("-");
 
 
-    if (
-        partes.length !== 3
-    )
+    if (partes.length !== 3)
         return data;
 
 
@@ -524,29 +440,32 @@ function formatarData(data) {
 
 function escapar(texto) {
 
-    return String(
-        texto || ""
-    )
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
+    return String(texto || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+// =====================================================
+// ATUALIZAR ELEMENTO
+// =====================================================
+
+function atualizarElemento(id, valor) {
+
+    const elemento =
+        document.getElementById(id);
+
+
+    if (elemento) {
+
+        elemento.textContent =
+            valor;
+
+    }
 
 }
 
@@ -569,26 +488,22 @@ function adicionarEventosPreview() {
     ];
 
 
-    campos.forEach(
-        id => {
+    campos.forEach(id => {
 
-            const campo =
-                document.getElementById(
-                    id
-                );
+        const campo =
+            document.getElementById(id);
 
 
-            if (campo) {
+        if (campo) {
 
-                campo.addEventListener(
-                    "input",
-                    atualizarPreview
-                );
-
-            }
+            campo.addEventListener(
+                "input",
+                atualizarPreview
+            );
 
         }
-    );
+
+    });
 
 }
 
@@ -620,21 +535,17 @@ function calcularFrete() {
 
 
     const outrasDespesas =
-        numero(
-            "outrasDespesas"
-        );
+        numero("outrasDespesas");
 
 
-    // =================================================
+    // -------------------------------------------------
     // COMBUSTÍVEL
-    // =================================================
+    // -------------------------------------------------
 
     let combustivel = 0;
 
 
-    if (
-        configuracao.consumo > 0
-    ) {
+    if (configuracao.consumo > 0) {
 
         combustivel =
             (
@@ -646,35 +557,35 @@ function calcularFrete() {
     }
 
 
-    // =================================================
+    // -------------------------------------------------
     // CUSTO FIXO MENSAL
-    // =================================================
+    // -------------------------------------------------
 
     const custoFixoMensal =
 
-        configuracao.manutencao +
+        Number(configuracao.manutencao || 0) +
 
-        configuracao.seguro +
+        Number(configuracao.seguro || 0) +
 
-        configuracao.pneus +
+        Number(configuracao.pneus || 0) +
 
         (
-            configuracao.ipva /
+            Number(configuracao.ipva || 0) /
             12
         );
 
 
-    // =================================================
-    // CUSTO FIXO POR DIA
-    // =================================================
+    // -------------------------------------------------
+    // CUSTO FIXO DIÁRIO
+    // -------------------------------------------------
 
     const custoFixoDiario =
         custoFixoMensal / 26;
 
 
-    // =================================================
-    // CUSTO TOTAL
-    // =================================================
+    // -------------------------------------------------
+    // CUSTO TOTAL DO FRETE
+    // -------------------------------------------------
 
     const custoTotal =
 
@@ -691,33 +602,26 @@ function calcularFrete() {
         custoFixoDiario;
 
 
-    // =================================================
+    // -------------------------------------------------
     // LUCRO
-    // =================================================
+    // -------------------------------------------------
 
     const lucro =
         valorFrete -
         custoTotal;
 
 
-    // =================================================
+    // -------------------------------------------------
     // MARGEM
-    // =================================================
+    // -------------------------------------------------
 
-    let margem = 0;
-
-
-    if (
+    const margem =
         valorFrete > 0
-    ) {
-
-        margem =
-            (
+            ? (
                 lucro /
                 valorFrete
-            ) * 100;
-
-    }
+            ) * 100
+            : 0;
 
 
     return {
@@ -759,56 +663,42 @@ function atualizarPreview() {
         calcularFrete();
 
 
-    const combustivel =
-        document.getElementById(
-            "previewCombustivel"
-        );
+    atualizarElemento(
+        "previewCombustivel",
+        dinheiro(
+            calculo.combustivel
+        )
+    );
 
 
-    const custos =
-        document.getElementById(
-            "previewCustos"
-        );
+    atualizarElemento(
+        "previewCustos",
+        dinheiro(
+            calculo.custoTotal
+        )
+    );
+
+
+    atualizarElemento(
+        "previewLucro",
+        dinheiro(
+            calculo.lucro
+        )
+    );
+
+
+    atualizarElemento(
+        "previewMargem",
+        porcentagem(
+            calculo.margem
+        )
+    );
 
 
     const lucro =
         document.getElementById(
             "previewLucro"
         );
-
-
-    const margem =
-        document.getElementById(
-            "previewMargem"
-        );
-
-
-    if (combustivel)
-        combustivel.textContent =
-            dinheiro(
-                calculo.combustivel
-            );
-
-
-    if (custos)
-        custos.textContent =
-            dinheiro(
-                calculo.custoTotal
-            );
-
-
-    if (lucro)
-        lucro.textContent =
-            dinheiro(
-                calculo.lucro
-            );
-
-
-    if (margem)
-        margem.textContent =
-            porcentagem(
-                calculo.margem
-            );
 
 
     if (lucro) {
@@ -832,25 +722,25 @@ function registrarFrete() {
     const cliente =
         document.getElementById(
             "cliente"
-        ).value.trim();
+        )?.value.trim() || "";
 
 
     const origem =
         document.getElementById(
             "origem"
-        ).value.trim();
+        )?.value.trim() || "";
 
 
     const destino =
         document.getElementById(
             "destino"
-        ).value.trim();
+        )?.value.trim() || "";
 
 
     const data =
         document.getElementById(
             "data"
-        ).value;
+        )?.value || "";
 
 
     const calculo =
@@ -868,9 +758,7 @@ function registrarFrete() {
     }
 
 
-    if (
-        calculo.km <= 0
-    ) {
+    if (calculo.km <= 0) {
 
         alert(
             "Informe a quilometragem."
@@ -881,9 +769,7 @@ function registrarFrete() {
     }
 
 
-    if (
-        calculo.valorFrete <= 0
-    ) {
+    if (calculo.valorFrete <= 0) {
 
         alert(
             "Informe o valor cobrado."
@@ -896,8 +782,7 @@ function registrarFrete() {
 
     const frete = {
 
-        id:
-            Date.now(),
+        id: Date.now(),
 
         data,
 
@@ -912,26 +797,34 @@ function registrarFrete() {
     };
 
 
-    fretes.push(
-        frete
-    );
+    fretes.push(frete);
 
 
-    localStorage.setItem(
-        "fretesCaminhao",
-        JSON.stringify(
-            fretes
-        )
-    );
+    salvarFretes();
 
 
     limparFormularioFrete();
+
 
     atualizarTudo();
 
 
     alert(
         "Frete registrado com sucesso!"
+    );
+
+}
+
+
+// =====================================================
+// SALVAR FRETES
+// =====================================================
+
+function salvarFretes() {
+
+    localStorage.setItem(
+        "fretesCaminhao",
+        JSON.stringify(fretes)
     );
 
 }
@@ -958,20 +851,19 @@ function limparFormularioFrete() {
     ];
 
 
-    campos.forEach(
-        id => {
+    campos.forEach(id => {
 
-            const campo =
-                document.getElementById(
-                    id
-                );
+        const campo =
+            document.getElementById(id);
 
 
-            if (campo)
-                campo.value = "";
+        if (campo) {
+
+            campo.value = "";
 
         }
-    );
+
+    });
 
 
     definirDataAtual();
@@ -982,7 +874,7 @@ function limparFormularioFrete() {
 
 
 // =====================================================
-// DESPESAS AVULSAS
+// REGISTRAR DESPESA
 // =====================================================
 
 function registrarDespesa() {
@@ -990,25 +882,23 @@ function registrarDespesa() {
     const data =
         document.getElementById(
             "dataDespesa"
-        ).value;
+        )?.value || "";
 
 
     const tipo =
         document.getElementById(
             "tipoDespesa"
-        ).value;
+        )?.value || "";
 
 
     const descricao =
         document.getElementById(
             "descricaoDespesa"
-        ).value.trim();
+        )?.value.trim() || "";
 
 
     const valor =
-        numero(
-            "valorDespesa"
-        );
+        numero("valorDespesa");
 
 
     if (!data) {
@@ -1046,8 +936,7 @@ function registrarDespesa() {
 
     const despesa = {
 
-        id:
-            Date.now(),
+        id: Date.now(),
 
         data,
 
@@ -1060,20 +949,14 @@ function registrarDespesa() {
     };
 
 
-    despesas.push(
-        despesa
-    );
+    despesas.push(despesa);
 
 
-    localStorage.setItem(
-        "despesasCaminhao",
-        JSON.stringify(
-            despesas
-        )
-    );
+    salvarDespesas();
 
 
     limparFormularioDespesa();
+
 
     atualizarTudo();
 
@@ -1086,7 +969,21 @@ function registrarDespesa() {
 
 
 // =====================================================
-// LIMPAR DESPESA
+// SALVAR DESPESAS
+// =====================================================
+
+function salvarDespesas() {
+
+    localStorage.setItem(
+        "despesasCaminhao",
+        JSON.stringify(despesas)
+    );
+
+}
+
+
+// =====================================================
+// LIMPAR FORMULÁRIO DESPESA
 // =====================================================
 
 function limparFormularioDespesa() {
@@ -1151,13 +1048,10 @@ function atualizarTabela() {
     tabela.innerHTML = "";
 
 
-    if (
-        fretes.length === 0
-    ) {
+    if (fretes.length === 0) {
 
         if (semFretes)
-            semFretes.style.display =
-                "block";
+            semFretes.style.display = "block";
 
         return;
 
@@ -1165,8 +1059,7 @@ function atualizarTabela() {
 
 
     if (semFretes)
-        semFretes.style.display =
-            "none";
+        semFretes.style.display = "none";
 
 
     const ordenados =
@@ -1177,99 +1070,66 @@ function atualizarTabela() {
         );
 
 
-    ordenados.forEach(
-        frete => {
+    ordenados.forEach(frete => {
 
-            const tr =
-                document.createElement(
-                    "tr"
-                );
+        const tr =
+            document.createElement("tr");
 
 
-            const classe =
-                frete.lucro >= 0
-                    ? "lucro-positive"
-                    : "lucro-negative";
+        const classe =
+            frete.lucro >= 0
+                ? "lucro-positive"
+                : "lucro-negative";
 
 
-            tr.innerHTML = `
+        tr.innerHTML = `
 
-                <td>
-                    ${formatarData(
-                        frete.data
-                    )}
-                </td>
+            <td>${formatarData(frete.data)}</td>
 
-                <td>
-                    ${escapar(
-                        frete.cliente
-                    )}
-                </td>
+            <td>${escapar(frete.cliente)}</td>
 
-                <td>
-                    ${escapar(
-                        frete.origem
-                    )}
-                </td>
+            <td>${escapar(frete.origem)}</td>
 
-                <td>
-                    ${escapar(
-                        frete.destino
-                    )}
-                </td>
+            <td>${escapar(frete.destino)}</td>
 
-                <td>
-                    ${formatarNumero(
-                        frete.km
-                    )}
-                    km
-                </td>
+            <td>
+                ${formatarNumero(frete.km)} km
+            </td>
 
-                <td>
-                    ${dinheiro(
-                        frete.valorFrete
-                    )}
-                </td>
+            <td>
+                ${dinheiro(frete.valorFrete)}
+            </td>
 
-                <td>
-                    ${dinheiro(
-                        frete.custoTotal
-                    )}
-                </td>
+            <td>
+                ${dinheiro(frete.custoTotal)}
+            </td>
 
-                <td class="${classe}">
-                    ${dinheiro(
-                        frete.lucro
-                    )}
-                </td>
+            <td class="${classe}">
+                ${dinheiro(frete.lucro)}
+            </td>
 
-                <td>
-                    ${porcentagem(
-                        frete.margem
-                    )}
-                </td>
+            <td>
+                ${porcentagem(frete.margem)}
+            </td>
 
-                <td>
+            <td>
 
-                    <button
-                        class="btn-delete"
-                        onclick="excluirFrete(${frete.id})">
+                <button
+                    class="btn-delete"
+                    onclick="excluirFrete(${frete.id})"
+                    title="Excluir frete"
+                >
+                    🗑️
+                </button>
 
-                        🗑️
+            </td>
 
-                    </button>
-
-                </td>
-
-            `;
+        `;
 
 
-            tabela.appendChild(
-                tr
-            );
+        tabela.appendChild(tr);
 
-        }
-    );
+    });
 
 }
 
@@ -1284,8 +1144,11 @@ function excluirFrete(id) {
         !confirm(
             "Deseja realmente excluir este frete?"
         )
-    )
+    ) {
+
         return;
+
+    }
 
 
     fretes =
@@ -1295,12 +1158,7 @@ function excluirFrete(id) {
         );
 
 
-    localStorage.setItem(
-        "fretesCaminhao",
-        JSON.stringify(
-            fretes
-        )
-    );
+    salvarFretes();
 
 
     atualizarTudo();
@@ -1333,13 +1191,10 @@ function atualizarTabelaDespesas() {
     tabela.innerHTML = "";
 
 
-    if (
-        despesas.length === 0
-    ) {
+    if (despesas.length === 0) {
 
         if (vazio)
-            vazio.style.display =
-                "block";
+            vazio.style.display = "block";
 
         return;
 
@@ -1347,8 +1202,7 @@ function atualizarTabelaDespesas() {
 
 
     if (vazio)
-        vazio.style.display =
-            "none";
+        vazio.style.display = "none";
 
 
     const ordenadas =
@@ -1359,64 +1213,48 @@ function atualizarTabelaDespesas() {
         );
 
 
-    ordenadas.forEach(
-        despesa => {
+    ordenadas.forEach(despesa => {
 
-            const tr =
-                document.createElement(
-                    "tr"
-                );
+        const tr =
+            document.createElement("tr");
 
 
-            tr.innerHTML = `
+        tr.innerHTML = `
 
-                <td>
-                    ${formatarData(
-                        despesa.data
-                    )}
-                </td>
+            <td>
+                ${formatarData(despesa.data)}
+            </td>
 
-                <td>
-                    ${escapar(
-                        despesa.tipo
-                    )}
-                </td>
+            <td>
+                ${escapar(despesa.tipo)}
+            </td>
 
-                <td>
-                    ${escapar(
-                        despesa.descricao
-                    )}
-                </td>
+            <td>
+                ${escapar(despesa.descricao)}
+            </td>
 
-                <td class="lucro-negative">
+            <td class="lucro-negative">
+                ${dinheiro(despesa.valor)}
+            </td>
 
-                    ${dinheiro(
-                        despesa.valor
-                    )}
+            <td>
 
-                </td>
+                <button
+                    class="btn-delete"
+                    onclick="excluirDespesa(${despesa.id})"
+                    title="Excluir despesa"
+                >
+                    🗑️
+                </button>
 
-                <td>
+            </td>
 
-                    <button
-                        class="btn-delete"
-                        onclick="excluirDespesa(${despesa.id})">
-
-                        🗑️
-
-                    </button>
-
-                </td>
-
-            `;
+        `;
 
 
-            tabela.appendChild(
-                tr
-            );
+        tabela.appendChild(tr);
 
-        }
-    );
+    });
 
 }
 
@@ -1431,8 +1269,11 @@ function excluirDespesa(id) {
         !confirm(
             "Deseja realmente excluir esta despesa?"
         )
-    )
+    ) {
+
         return;
+
+    }
 
 
     despesas =
@@ -1442,12 +1283,7 @@ function excluirDespesa(id) {
         );
 
 
-    localStorage.setItem(
-        "despesasCaminhao",
-        JSON.stringify(
-            despesas
-        )
-    );
+    salvarDespesas();
 
 
     atualizarTudo();
@@ -1483,9 +1319,7 @@ function atualizarPainelPrincipal() {
         fretes.filter(
             frete =>
                 frete.data &&
-                frete.data.startsWith(
-                    periodo
-                )
+                frete.data.startsWith(periodo)
         );
 
 
@@ -1493,9 +1327,7 @@ function atualizarPainelPrincipal() {
         despesas.filter(
             despesa =>
                 despesa.data &&
-                despesa.data.startsWith(
-                    periodo
-                )
+                despesa.data.startsWith(periodo)
         );
 
 
@@ -1506,75 +1338,103 @@ function atualizarPainelPrincipal() {
         );
 
 
+    // -------------------------------------------------
+    // FATURAMENTO
+    // -------------------------------------------------
+
     atualizarElemento(
         "totalFaturamento",
-        dinheiro(
-            dados.faturamento
-        )
+        dinheiro(dados.faturamento)
     );
 
+
+    // -------------------------------------------------
+    // CUSTOS DOS FRETES
+    // -------------------------------------------------
 
     atualizarElemento(
         "totalCustosFretes",
-        dinheiro(
-            dados.custosFretes
-        )
+        dinheiro(dados.custosFretes)
     );
 
 
+    // -------------------------------------------------
+    // DESPESAS AVULSAS
+    // -------------------------------------------------
+
     atualizarElemento(
         "totalDespesas",
+        dinheiro(dados.despesas)
+    );
+
+
+    // -------------------------------------------------
+    // 💸 GASTOS TOTAIS
+    // -------------------------------------------------
+
+    atualizarElemento(
+        "totalGastos",
         dinheiro(
+            dados.custosFretes +
             dados.despesas
         )
     );
 
-    atualizarElemento(
-    "totalGastos",
-    dinheiro(
-        dados.custosFretes +
-        dados.despesas
-    )
-);
 
+    // -------------------------------------------------
+    // LUCRO REAL
+    // -------------------------------------------------
 
     atualizarElemento(
         "totalLucro",
-        dinheiro(
-            dados.lucroReal
-        )
+        dinheiro(dados.lucroReal)
     );
 
+
+    // -------------------------------------------------
+    // MARGEM
+    // -------------------------------------------------
 
     atualizarElemento(
         "margemMedia",
-        porcentagem(
-            dados.margem
-        )
+        porcentagem(dados.margem)
     );
 
+
+    // -------------------------------------------------
+    // KM
+    // -------------------------------------------------
 
     atualizarElemento(
         "totalKm",
-        formatarNumero(
-            dados.km
-        ) + " km"
+        formatarNumero(dados.km) +
+        " km"
     );
 
+
+    // -------------------------------------------------
+    // LUCRO POR KM
+    // -------------------------------------------------
 
     atualizarElemento(
         "lucroPorKm",
-        dinheiro(
-            dados.lucroPorKm
-        )
+        dinheiro(dados.lucroPorKm)
     );
 
+
+    // -------------------------------------------------
+    // QUANTIDADE DE FRETES
+    // -------------------------------------------------
 
     atualizarElemento(
         "totalFretes",
         dados.quantidade
     );
 
+
+    // -------------------------------------------------
+    // CLASSE DO LUCRO
+    // -------------------------------------------------
 
     const lucro =
         document.getElementById(
@@ -1606,8 +1466,8 @@ function atualizarPainelPrincipal() {
 // =====================================================
 
 function calcularResumo(
-    fretesLista,
-    despesasLista
+    fretesLista = [],
+    despesasLista = []
 ) {
 
     let faturamento = 0;
@@ -1619,47 +1479,59 @@ function calcularResumo(
     let km = 0;
 
 
-    fretesLista.forEach(
-        frete => {
+    fretesLista.forEach(frete => {
 
-            faturamento +=
-                Number(
-                    frete.valorFrete
-                ) || 0;
-
-
-            custosFretes +=
-                Number(
-                    frete.custoTotal
-                ) || 0;
+        faturamento +=
+            Number(
+                frete.valorFrete
+            ) || 0;
 
 
-            km +=
-                Number(
-                    frete.km
-                ) || 0;
-
-        }
-    );
+        custosFretes +=
+            Number(
+                frete.custoTotal
+            ) || 0;
 
 
-    despesasLista.forEach(
-        despesa => {
+        km +=
+            Number(
+                frete.km
+            ) || 0;
 
-            despesasGerais +=
-                Number(
-                    despesa.valor
-                ) || 0;
+    });
 
-        }
-    );
 
+    despesasLista.forEach(despesa => {
+
+        despesasGerais +=
+            Number(
+                despesa.valor
+            ) || 0;
+
+    });
+
+
+    // -------------------------------------------------
+    // GASTOS TOTAIS
+    // -------------------------------------------------
+
+    const gastosTotais =
+        custosFretes +
+        despesasGerais;
+
+
+    // -------------------------------------------------
+    // LUCRO REAL
+    // -------------------------------------------------
 
     const lucroReal =
         faturamento -
-        custosFretes -
-        despesasGerais;
+        gastosTotais;
 
+
+    // -------------------------------------------------
+    // MARGEM
+    // -------------------------------------------------
 
     const margem =
         faturamento > 0
@@ -1669,6 +1541,10 @@ function calcularResumo(
             ) * 100
             : 0;
 
+
+    // -------------------------------------------------
+    // LUCRO POR KM
+    // -------------------------------------------------
 
     const lucroPorKm =
         km > 0
@@ -1682,8 +1558,9 @@ function calcularResumo(
 
         custosFretes,
 
-        despesas:
-            despesasGerais,
+        despesas: despesasGerais,
+
+        gastosTotais,
 
         lucroReal,
 
@@ -1729,9 +1606,7 @@ function atualizarAnaliseMensal() {
         fretes.filter(
             frete =>
                 frete.data &&
-                frete.data.startsWith(
-                    periodo
-                )
+                frete.data.startsWith(periodo)
         );
 
 
@@ -1739,9 +1614,7 @@ function atualizarAnaliseMensal() {
         despesas.filter(
             despesa =>
                 despesa.data &&
-                despesa.data.startsWith(
-                    periodo
-                )
+                despesa.data.startsWith(periodo)
         );
 
 
@@ -1754,49 +1627,38 @@ function atualizarAnaliseMensal() {
 
     atualizarElemento(
         "mesFaturamento",
-        dinheiro(
-            dados.faturamento
-        )
+        dinheiro(dados.faturamento)
     );
 
 
     atualizarElemento(
         "mesCustosFretes",
-        dinheiro(
-            dados.custosFretes
-        )
+        dinheiro(dados.custosFretes)
     );
 
 
     atualizarElemento(
         "mesDespesas",
-        dinheiro(
-            dados.despesas
-        )
+        dinheiro(dados.despesas)
     );
 
 
     atualizarElemento(
         "mesLucro",
-        dinheiro(
-            dados.lucroReal
-        )
+        dinheiro(dados.lucroReal)
     );
 
 
     atualizarElemento(
         "mesMargem",
-        porcentagem(
-            dados.margem
-        )
+        porcentagem(dados.margem)
     );
 
 
     atualizarElemento(
         "mesKm",
-        formatarNumero(
-            dados.km
-        ) + " km"
+        formatarNumero(dados.km) +
+        " km"
     );
 
 
@@ -1808,9 +1670,7 @@ function atualizarAnaliseMensal() {
 
     atualizarElemento(
         "mesLucroKm",
-        dinheiro(
-            dados.lucroPorKm
-        )
+        dinheiro(dados.lucroPorKm)
     );
 
 
@@ -1822,9 +1682,7 @@ function atualizarAnaliseMensal() {
     );
 
 
-    atualizarRanking(
-        fretesMes
-    );
+    atualizarRanking(fretesMes);
 
 }
 
@@ -1848,110 +1706,85 @@ function atualizarGraficoMensal(
 
         despesas,
 
-        Math.max(
-            lucro,
-            0
-        )
+        Math.max(lucro, 0)
 
     ];
 
 
     const maior =
-        Math.max(
-            ...valores
-        );
+        Math.max(...valores);
 
 
     const barras = [
 
         {
-            id:
-                "barFaturamento",
-
-            valor:
-                faturamento
+            id: "barFaturamento",
+            valor: faturamento
         },
 
         {
-            id:
-                "barCustos",
-
-            valor:
-                custos
+            id: "barCustos",
+            valor: custos
         },
 
         {
-            id:
-                "barDespesas",
-
-            valor:
-                despesas
+            id: "barDespesas",
+            valor: despesas
         },
 
         {
-            id:
-                "barLucro",
-
-            valor:
-                Math.max(
-                    lucro,
-                    0
-                )
+            id: "barLucro",
+            valor: Math.max(lucro, 0)
         }
 
     ];
 
 
-    barras.forEach(
-        barra => {
+    barras.forEach(barra => {
 
-            const elemento =
-                document.getElementById(
-                    barra.id
-                );
-
-
-            if (!elemento)
-                return;
+        const elemento =
+            document.getElementById(
+                barra.id
+            );
 
 
-            if (
-                maior <= 0
-            ) {
-
-                elemento.style.height =
-                    "4px";
-
-            } else {
-
-                const altura =
-                    (
-                        barra.valor /
-                        maior
-                    ) * 210;
+        if (!elemento)
+            return;
 
 
-                elemento.style.height =
-                    `${Math.max(
-                        altura,
-                        4
-                    )}px`;
+        if (maior <= 0) {
 
-            }
+            elemento.style.height =
+                "4px";
+
+            return;
 
         }
-    );
+
+
+        const altura =
+            (
+                barra.valor /
+                maior
+            ) * 210;
+
+
+        elemento.style.height =
+            `${Math.max(
+                altura,
+                4
+            )}px`;
+
+    });
 
 }
 
 
 // =====================================================
-// RANKING
+// RANKING DE FRETES
 // =====================================================
 
-function atualizarRanking(
-    fretesMes
-) {
+function atualizarRanking(fretesMes) {
 
     const container =
         document.getElementById(
@@ -1966,16 +1799,12 @@ function atualizarRanking(
     container.innerHTML = "";
 
 
-    if (
-        fretesMes.length === 0
-    ) {
+    if (fretesMes.length === 0) {
 
         container.innerHTML = `
 
             <p class="empty">
-
                 Nenhum frete neste mês.
-
             </p>
 
         `;
@@ -1992,17 +1821,11 @@ function atualizarRanking(
                     b.lucro -
                     a.lucro
             )
-            .slice(
-                0,
-                5
-            );
+            .slice(0, 5);
 
 
     ranking.forEach(
-        (
-            frete,
-            index
-        ) => {
+        (frete, index) => {
 
             const item =
                 document.createElement(
@@ -2024,42 +1847,30 @@ function atualizarRanking(
                 <div class="ranking-info">
 
                     <strong>
-
                         ${index + 1}º -
                         ${escapar(nome)}
-
                     </strong>
 
                     <span>
 
-                        ${formatarNumero(
-                            frete.km
-                        )}
-                        km
-                        ·
-                        ${dinheiro(
-                            frete.valorFrete
-                        )}
+                        ${formatarNumero(frete.km)}
+                        km ·
+                        ${dinheiro(frete.valorFrete)}
 
                     </span>
 
                 </div>
 
-
                 <div class="ranking-value">
 
-                    ${dinheiro(
-                        frete.lucro
-                    )}
+                    ${dinheiro(frete.lucro)}
 
                 </div>
 
             `;
 
 
-            container.appendChild(
-                item
-            );
+            container.appendChild(item);
 
         }
     );
@@ -2086,9 +1897,7 @@ function nomeMes(periodo) {
 
 
     const mes =
-        parseInt(
-            partes[1]
-        );
+        parseInt(partes[1]);
 
 
     const nomes = [
@@ -2118,17 +1927,13 @@ function nomeMes(periodo) {
 // OBTER DADOS DE UM MÊS
 // =====================================================
 
-function obterDadosMes(
-    periodo
-) {
+function obterDadosMes(periodo) {
 
     const fretesMes =
         fretes.filter(
             frete =>
                 frete.data &&
-                frete.data.startsWith(
-                    periodo
-                )
+                frete.data.startsWith(periodo)
         );
 
 
@@ -2136,9 +1941,7 @@ function obterDadosMes(
         despesas.filter(
             despesa =>
                 despesa.data &&
-                despesa.data.startsWith(
-                    periodo
-                )
+                despesa.data.startsWith(periodo)
         );
 
 
@@ -2192,10 +1995,7 @@ function inicializarComparacao() {
     const mesAnterior =
         String(
             dataAnterior.getMonth() + 1
-        ).padStart(
-            2,
-            "0"
-        );
+        ).padStart(2, "0");
 
 
     mes1.value =
@@ -2258,15 +2058,11 @@ function atualizarComparacao() {
 
 
     const dados1 =
-        obterDadosMes(
-            periodo1
-        );
+        obterDadosMes(periodo1);
 
 
     const dados2 =
-        obterDadosMes(
-            periodo2
-        );
+        obterDadosMes(periodo2);
 
 
     atualizarElemento(
@@ -2281,23 +2077,17 @@ function atualizarComparacao() {
     );
 
 
-    // =================================================
     // FATURAMENTO
-    // =================================================
 
     preencherComparacao(
         "comparacaoFaturamento1",
-        dinheiro(
-            dados1.faturamento
-        )
+        dinheiro(dados1.faturamento)
     );
 
 
     preencherComparacao(
         "comparacaoFaturamento2",
-        dinheiro(
-            dados2.faturamento
-        )
+        dinheiro(dados2.faturamento)
     );
 
 
@@ -2308,23 +2098,17 @@ function atualizarComparacao() {
     );
 
 
-    // =================================================
     // CUSTOS
-    // =================================================
 
     preencherComparacao(
         "comparacaoCustos1",
-        dinheiro(
-            dados1.custosFretes
-        )
+        dinheiro(dados1.custosFretes)
     );
 
 
     preencherComparacao(
         "comparacaoCustos2",
-        dinheiro(
-            dados2.custosFretes
-        )
+        dinheiro(dados2.custosFretes)
     );
 
 
@@ -2336,23 +2120,17 @@ function atualizarComparacao() {
     );
 
 
-    // =================================================
     // DESPESAS
-    // =================================================
 
     preencherComparacao(
         "comparacaoDespesas1",
-        dinheiro(
-            dados1.despesas
-        )
+        dinheiro(dados1.despesas)
     );
 
 
     preencherComparacao(
         "comparacaoDespesas2",
-        dinheiro(
-            dados2.despesas
-        )
+        dinheiro(dados2.despesas)
     );
 
 
@@ -2364,23 +2142,17 @@ function atualizarComparacao() {
     );
 
 
-    // =================================================
     // LUCRO
-    // =================================================
 
     preencherComparacao(
         "comparacaoLucro1",
-        dinheiro(
-            dados1.lucroReal
-        )
+        dinheiro(dados1.lucroReal)
     );
 
 
     preencherComparacao(
         "comparacaoLucro2",
-        dinheiro(
-            dados2.lucroReal
-        )
+        dinheiro(dados2.lucroReal)
     );
 
 
@@ -2391,23 +2163,19 @@ function atualizarComparacao() {
     );
 
 
-    // =================================================
     // KM
-    // =================================================
 
     preencherComparacao(
         "comparacaoKm1",
-        formatarNumero(
-            dados1.km
-        ) + " km"
+        formatarNumero(dados1.km) +
+        " km"
     );
 
 
     preencherComparacao(
         "comparacaoKm2",
-        formatarNumero(
-            dados2.km
-        ) + " km"
+        formatarNumero(dados2.km) +
+        " km"
     );
 
 
@@ -2418,9 +2186,7 @@ function atualizarComparacao() {
     );
 
 
-    // =================================================
     // FRETES
-    // =================================================
 
     preencherComparacao(
         "comparacaoFretes1",
@@ -2441,23 +2207,17 @@ function atualizarComparacao() {
     );
 
 
-    // =================================================
     // MARGEM
-    // =================================================
 
     preencherComparacao(
         "comparacaoMargem1",
-        porcentagem(
-            dados1.margem
-        )
+        porcentagem(dados1.margem)
     );
 
 
     preencherComparacao(
         "comparacaoMargem2",
-        porcentagem(
-            dados2.margem
-        )
+        porcentagem(dados2.margem)
     );
 
 
@@ -2484,21 +2244,12 @@ function atualizarComparacao() {
 // PREENCHER COMPARAÇÃO
 // =====================================================
 
-function preencherComparacao(
-    id,
-    valor
-) {
+function preencherComparacao(id, valor) {
 
-    const elemento =
-        document.getElementById(id);
-
-
-    if (elemento) {
-
-        elemento.textContent =
-            valor;
-
-    }
+    atualizarElemento(
+        id,
+        valor
+    );
 
 }
 
@@ -2530,9 +2281,7 @@ function preencherDiferenca(
     let percentual = 0;
 
 
-    if (
-        valor2 !== 0
-    ) {
+    if (valor2 !== 0) {
 
         percentual =
             (
@@ -2569,14 +2318,10 @@ function preencherDiferenca(
 
         texto =
             `${diferenca >= 0 ? "+" : ""}` +
-            `${dinheiro(
-                diferenca
-            )}`;
+            `${dinheiro(diferenca)}`;
 
 
-        if (
-            valor2 !== 0
-        ) {
+        if (valor2 !== 0) {
 
             texto +=
                 ` (${percentual >= 0 ? "+" : ""}` +
@@ -2591,16 +2336,14 @@ function preencherDiferenca(
         texto;
 
 
-    // =================================================
+    // -------------------------------------------------
     // CUSTOS / DESPESAS
     // Menor = melhor
-    // =================================================
+    // -------------------------------------------------
 
     if (custo) {
 
-        if (
-            diferenca < 0
-        ) {
+        if (diferenca < 0) {
 
             elemento.classList.add(
                 "comparacao-positiva"
@@ -2608,9 +2351,7 @@ function preencherDiferenca(
 
         }
 
-        else if (
-            diferenca > 0
-        ) {
+        else if (diferenca > 0) {
 
             elemento.classList.add(
                 "comparacao-negativa"
@@ -2630,9 +2371,7 @@ function preencherDiferenca(
 
     else {
 
-        if (
-            diferenca > 0
-        ) {
+        if (diferenca > 0) {
 
             elemento.classList.add(
                 "comparacao-positiva"
@@ -2640,9 +2379,7 @@ function preencherDiferenca(
 
         }
 
-        else if (
-            diferenca < 0
-        ) {
+        else if (diferenca < 0) {
 
             elemento.classList.add(
                 "comparacao-negativa"
@@ -2684,28 +2421,24 @@ function atualizarResumoComparacao(
         return;
 
 
-    if (
-
+    const semDados1 =
         dados1.faturamento === 0 &&
-
         dados1.lucroReal === 0 &&
+        dados1.despesas === 0;
 
-        dados1.despesas === 0 &&
 
+    const semDados2 =
         dados2.faturamento === 0 &&
-
         dados2.lucroReal === 0 &&
+        dados2.despesas === 0;
 
-        dados2.despesas === 0
 
-    ) {
+    if (semDados1 && semDados2) {
 
         elemento.textContent =
 
             `Ainda não existem dados registrados ` +
-
             `para ${nomeMes(periodo1)} e ` +
-
             `${nomeMes(periodo2)}.`;
 
         return;
@@ -2724,9 +2457,7 @@ function atualizarResumoComparacao(
         mensagem =
 
             `📈 ${nomeMes(periodo1)} teve um lucro ` +
-
             `maior que ${nomeMes(periodo2)} em ` +
-
             `${dinheiro(
                 dados1.lucroReal -
                 dados2.lucroReal
@@ -2742,9 +2473,7 @@ function atualizarResumoComparacao(
         mensagem =
 
             `📉 ${nomeMes(periodo1)} teve um lucro ` +
-
             `menor que ${nomeMes(periodo2)} em ` +
-
             `${dinheiro(
                 dados2.lucroReal -
                 dados1.lucroReal
@@ -2755,7 +2484,6 @@ function atualizarResumoComparacao(
     else {
 
         mensagem =
-
             `⚖️ Os dois meses tiveram o mesmo lucro.`;
 
     }
@@ -2807,9 +2535,7 @@ function carregarTema() {
         );
 
 
-    if (
-        escuro === "true"
-    ) {
+    if (escuro === "true") {
 
         document.body.classList.add(
             "dark-mode"
@@ -2859,9 +2585,7 @@ function atualizarBotaoTema() {
 
 function exportarCSV() {
 
-    if (
-        fretes.length === 0
-    ) {
+    if (fretes.length === 0) {
 
         alert(
             "Não existem fretes para exportar."
@@ -2875,69 +2599,55 @@ function exportarCSV() {
     let csv =
 
         "Data;Cliente;Origem;Destino;KM;" +
-
         "Receita;Combustível;Pedágio;" +
-
         "Ajudantes;Alimentação;" +
-
         "Outras Despesas;Custo Total;" +
-
         "Lucro;Margem\n";
 
 
-    fretes.forEach(
-        frete => {
+    fretes.forEach(frete => {
 
-            csv += [
+        csv += [
 
-                frete.data,
+            frete.data,
 
-                limparCSV(
-                    frete.cliente
-                ),
+            limparCSV(frete.cliente),
 
-                limparCSV(
-                    frete.origem
-                ),
+            limparCSV(frete.origem),
 
-                limparCSV(
-                    frete.destino
-                ),
+            limparCSV(frete.destino),
 
-                frete.km,
+            frete.km,
 
-                frete.valorFrete,
+            frete.valorFrete,
 
-                frete.combustivel,
+            frete.combustivel,
 
-                frete.pedagio,
+            frete.pedagio,
 
-                frete.ajudantes,
+            frete.ajudantes,
 
-                frete.alimentacao,
+            frete.alimentacao,
 
-                frete.outrasDespesas,
+            frete.outrasDespesas,
 
-                frete.custoTotal,
+            frete.custoTotal,
 
-                frete.lucro,
+            frete.lucro,
 
-                Number(
-                    frete.margem
-                ).toFixed(2)
+            Number(
+                frete.margem
+            ).toFixed(2)
 
-            ].join(";") +
-            "\n";
+        ].join(";") + "\n";
 
-        }
-    );
+    });
 
 
     const blob =
         new Blob(
             [
-                "\ufeff" +
-                csv
+                "\ufeff" + csv
             ],
             {
                 type:
@@ -2947,15 +2657,11 @@ function exportarCSV() {
 
 
     const url =
-        URL.createObjectURL(
-            blob
-        );
+        URL.createObjectURL(blob);
 
 
     const link =
-        document.createElement(
-            "a"
-        );
+        document.createElement("a");
 
 
     link.href =
@@ -2966,12 +2672,14 @@ function exportarCSV() {
         "historico-caminhao.csv";
 
 
+    document.body.appendChild(link);
+
     link.click();
 
+    document.body.removeChild(link);
 
-    URL.revokeObjectURL(
-        url
-    );
+
+    URL.revokeObjectURL(url);
 
 }
 
@@ -2980,45 +2688,10 @@ function exportarCSV() {
 // LIMPAR CSV
 // =====================================================
 
-function limparCSV(
-    valor
-) {
+function limparCSV(valor) {
 
-    return String(
-        valor || ""
-    )
-        .replace(
-            /;/g,
-            ","
-        )
-        .replace(
-            /\n/g,
-            " "
-        );
-
-}
-
-
-// =====================================================
-// ATUALIZAR ELEMENTO
-// =====================================================
-
-function atualizarElemento(
-    id,
-    valor
-) {
-
-    const elemento =
-        document.getElementById(
-            id
-        );
-
-
-    if (elemento) {
-
-        elemento.textContent =
-            valor;
-
-    }
+    return String(valor || "")
+        .replace(/;/g, ",")
+        .replace(/\n/g, " ");
 
 }

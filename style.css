@@ -22,10 +22,12 @@ body {
     color: #17202a;
 
     transition:
-        background .3s,
-        color .3s;
+        background 0.3s,
+        color 0.3s;
 
     padding-bottom: 20px;
+
+    overflow-x: hidden;
 }
 
 
@@ -42,7 +44,7 @@ body {
         1px solid #e5e7eb;
 
     padding:
-        18px 5%;
+        16px 5%;
 
     display: flex;
 
@@ -55,17 +57,45 @@ body {
     gap: 20px;
 
     position: sticky;
+
     top: 0;
+
     z-index: 100;
+}
+
+
+/* LOGO + TÍTULO */
+
+.topbar-brand {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    min-width: 0;
+}
+
+.topbar-logo {
+    width: 48px;
+    height: 48px;
+
+    object-fit: contain;
+
+    flex-shrink: 0;
 }
 
 .topbar h1 {
     font-size: 25px;
+
     margin-bottom: 5px;
+
+    line-height: 1.2;
 }
 
 .topbar p {
     color: #6b7280;
+
     font-size: 14px;
 }
 
@@ -79,6 +109,7 @@ body {
         1px solid #d1d5db;
 
     background: #ffffff;
+
     color: #17202a;
 
     padding:
@@ -90,7 +121,9 @@ body {
 
     font-weight: 600;
 
-    transition: .2s;
+    transition:
+        transform 0.2s,
+        background 0.2s;
 
     white-space: nowrap;
 }
@@ -107,6 +140,7 @@ body {
 
 .container {
     width: 92%;
+
     max-width: 1400px;
 
     margin:
@@ -129,6 +163,11 @@ body {
     margin-bottom: 22px;
 }
 
+
+/* =====================================================
+   CARDS
+===================================================== */
+
 .card {
     background: #ffffff;
 
@@ -150,18 +189,47 @@ body {
 
     box-shadow:
         0 3px 12px
-        rgba(179, 30, 30, 0.04);
+        rgba(0, 0, 0, 0.04);
 
-    transition: .3s;
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+
+.card:hover {
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 6px 18px
+        rgba(0, 0, 0, 0.07);
 }
 
 .card span {
     font-size: 13px;
+
     color: #6b7280;
 }
 
 .card strong {
     font-size: 21px;
+
+    line-height: 1.2;
+}
+
+
+/* CORES DOS CARDS */
+
+.card.faturamento strong {
+    color: #2563eb;
+}
+
+.card.gastos strong {
+    color: #dc2626;
+}
+
+.card.despesas strong {
+    color: #f97316;
 }
 
 .card.lucro strong {
@@ -187,7 +255,7 @@ body {
 
     box-shadow:
         0 3px 15px
-        rgba(0, 0, 0, .04);
+        rgba(0, 0, 0, 0.04);
 }
 
 .panel-header {
@@ -206,11 +274,13 @@ body {
 
 .panel-header h2 {
     font-size: 20px;
+
     margin-bottom: 5px;
 }
 
 .panel-header p {
     color: #6b7280;
+
     font-size: 14px;
 }
 
@@ -267,7 +337,9 @@ body {
 
     min-height: 45px;
 
-    transition: .2s;
+    transition:
+        border 0.2s,
+        box-shadow 0.2s;
 }
 
 .field input:focus,
@@ -277,7 +349,7 @@ body {
 
     box-shadow:
         0 0 0 3px
-        rgba(37, 99, 235, .1);
+        rgba(37, 99, 235, 0.1);
 }
 
 
@@ -299,7 +371,9 @@ body {
 
     cursor: pointer;
 
-    transition: .2s;
+    transition:
+        transform 0.2s,
+        opacity 0.2s;
 
     font-size: 14px;
 }
@@ -309,24 +383,33 @@ body {
         translateY(-1px);
 }
 
+.btn:active {
+    transform:
+        scale(0.98);
+}
+
 .primary {
     background: #2563eb;
-    color: white;
+
+    color: #ffffff;
 }
 
 .success {
     background: #16a34a;
-    color: white;
+
+    color: #ffffff;
 }
 
 .danger {
     background: #dc2626;
-    color: white;
+
+    color: #ffffff;
 }
 
 .secondary {
     background: #374151;
-    color: white;
+
+    color: #ffffff;
 }
 
 .btn-full {
@@ -365,6 +448,7 @@ body {
 
 .preview span {
     font-size: 12px;
+
     color: #6b7280;
 }
 
@@ -395,6 +479,7 @@ body {
 
 .month-selector label {
     font-size: 12px;
+
     color: #6b7280;
 }
 
@@ -448,6 +533,7 @@ body {
 
 .mini-card span {
     color: #6b7280;
+
     font-size: 12px;
 }
 
@@ -503,6 +589,8 @@ body {
 
     justify-content:
         center;
+
+    overflow: hidden;
 }
 
 .bar-group {
@@ -517,6 +605,8 @@ body {
         center;
 
     gap: 35px;
+
+    max-width: 100%;
 }
 
 .bar-container {
@@ -544,7 +634,7 @@ body {
         7px 7px 0 0;
 
     transition:
-        height .4s;
+        height 0.4s;
 }
 
 .faturamento-bar {
@@ -561,7 +651,10 @@ body {
 
 .bar-container span {
     font-size: 11px;
+
     color: #6b7280;
+
+    text-align: center;
 }
 
 
@@ -606,10 +699,13 @@ body {
     overflow: hidden;
 
     text-overflow: ellipsis;
+
+    white-space: nowrap;
 }
 
 .ranking-info span {
     font-size: 12px;
+
     color: #6b7280;
 }
 
@@ -632,6 +728,8 @@ body {
     overflow-x: auto;
 
     -webkit-overflow-scrolling: touch;
+
+    border-radius: 10px;
 }
 
 table {
@@ -653,6 +751,8 @@ th {
     font-size: 12px;
 
     color: #6b7280;
+
+    white-space: nowrap;
 }
 
 td {
@@ -666,11 +766,13 @@ td {
 
 .lucro-positive {
     color: #16a34a;
+
     font-weight: bold;
 }
 
 .lucro-negative {
     color: #dc2626;
+
     font-weight: bold;
 }
 
@@ -729,7 +831,10 @@ td {
 
 .comparison-table-container {
     width: 100%;
+
     overflow-x: auto;
+
+    -webkit-overflow-scrolling: touch;
 }
 
 .comparison-table {
@@ -754,7 +859,8 @@ td {
 }
 
 .comparison-table td {
-    padding: 15px 14px;
+    padding:
+        15px 14px;
 
     border-top:
         1px solid #e5e7eb;
@@ -784,16 +890,19 @@ td {
 
 .comparacao-positiva {
     color: #16a34a !important;
+
     font-weight: bold;
 }
 
 .comparacao-negativa {
     color: #dc2626 !important;
+
     font-weight: bold;
 }
 
 .comparacao-neutra {
     color: #6b7280 !important;
+
     font-weight: bold;
 }
 
@@ -819,11 +928,13 @@ footer {
 
 body.dark-mode {
     background: #0f172a;
+
     color: #e5e7eb;
 }
 
 .dark-mode .topbar {
     background: #111827;
+
     border-color: #1f2937;
 }
 
@@ -832,30 +943,36 @@ body.dark-mode {
 .dark-mode .field label,
 .dark-mode .card span,
 .dark-mode .preview span,
-.dark-mode .mini-card span {
+.dark-mode .mini-card span,
+.dark-mode .month-selector label {
     color: #9ca3af;
 }
 
 .dark-mode .theme-toggle {
     background: #1f2937;
+
     color: #f9fafb;
+
     border-color: #374151;
 }
 
 .dark-mode .panel,
 .dark-mode .card {
     background: #111827;
+
     border-color: #1f2937;
 
     box-shadow:
         0 4px 15px
-        rgba(0,0,0,.25);
+        rgba(0, 0, 0, 0.25);
 }
 
 .dark-mode .field input,
 .dark-mode .field select {
     background: #1f2937;
+
     color: #f9fafb;
+
     border-color: #374151;
 }
 
@@ -871,12 +988,14 @@ body.dark-mode {
 .dark-mode .ranking-box,
 .dark-mode .mini-card {
     border-color: #1f2937;
+
     background: #111827;
 }
 
 .dark-mode th,
 .dark-mode .comparison-table th {
     background: #1f2937;
+
     color: #9ca3af;
 }
 
@@ -888,12 +1007,15 @@ body.dark-mode {
 
 .dark-mode .month-selector input {
     background: #1f2937;
-    color: white;
+
+    color: #ffffff;
+
     border-color: #374151;
 }
 
 .dark-mode .comparison-result {
     background: #0f172a;
+
     color: #e5e7eb;
 }
 
@@ -932,36 +1054,77 @@ body.dark-mode {
     }
 
 
-    /* HEADER */
+    /* =================================================
+       TOPBAR
+    ================================================= */
 
     .topbar {
         min-height: auto;
 
         padding:
-            16px 4%;
+            13px 4%;
 
-        flex-direction: column;
+        flex-direction: row;
 
         align-items:
-            stretch;
+            center;
 
-        position: relative;
+        gap: 10px;
+
+        position: sticky;
+    }
+
+    .topbar-brand {
+        gap: 9px;
+
+        flex: 1;
+
+        min-width: 0;
+    }
+
+    .topbar-logo {
+        width: 40px;
+
+        height: 40px;
     }
 
     .topbar h1 {
-        font-size: 21px;
+        font-size: 18px;
+
+        margin-bottom: 2px;
+
+        white-space: nowrap;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
     }
 
     .topbar p {
-        font-size: 13px;
+        font-size: 11px;
+
+        white-space: nowrap;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
     }
 
     .theme-toggle {
-        width: 100%;
+        width: auto;
+
+        padding:
+            10px 12px;
+
+        min-height: 42px;
+
+        font-size: 13px;
     }
 
 
-    /* CONTAINER */
+    /* =================================================
+       CONTAINER
+    ================================================= */
 
     .container {
         width: 94%;
@@ -971,19 +1134,21 @@ body.dark-mode {
     }
 
 
-    /* DASHBOARD */
+    /* =================================================
+       DASHBOARD
+    ================================================= */
 
     .dashboard {
         grid-template-columns:
             repeat(2, 1fr);
 
-        gap: 10px;
+        gap: 9px;
     }
 
     .card {
-        min-height: 95px;
+        min-height: 92px;
 
-        padding: 14px;
+        padding: 13px;
 
         border-radius: 12px;
     }
@@ -993,20 +1158,23 @@ body.dark-mode {
     }
 
     .card strong {
-        font-size: 17px;
+        font-size: 16px;
+
+        word-break: break-word;
     }
 
 
-    /* PAINEL */
+    /* =================================================
+       PAINEL
+    ================================================= */
 
     .panel {
-        padding: 16px;
+        padding: 15px;
 
         border-radius: 13px;
 
         margin-bottom: 15px;
     }
-
 
     .panel-header {
         flex-direction: column;
@@ -1017,13 +1185,14 @@ body.dark-mode {
         gap: 12px;
     }
 
-
     .panel-header h2 {
         font-size: 18px;
     }
 
 
-    /* FORM */
+    /* =================================================
+       FORM
+    ================================================= */
 
     .form-grid {
         grid-template-columns:
@@ -1037,10 +1206,14 @@ body.dark-mode {
         min-height: 48px;
 
         font-size: 16px;
+
+        border-radius: 9px;
     }
 
 
-    /* PREVIEW */
+    /* =================================================
+       PREVIEW
+    ================================================= */
 
     .preview {
         grid-template-columns:
@@ -1056,7 +1229,9 @@ body.dark-mode {
     }
 
 
-    /* BOTÕES */
+    /* =================================================
+       BOTÕES
+    ================================================= */
 
     .btn {
         width: 100%;
@@ -1067,7 +1242,9 @@ body.dark-mode {
     }
 
 
-    /* MONTH */
+    /* =================================================
+       MONTH
+    ================================================= */
 
     .month-selector {
         width: 100%;
@@ -1082,7 +1259,9 @@ body.dark-mode {
     }
 
 
-    /* CARDS MENSAIS */
+    /* =================================================
+       CARDS MENSAIS
+    ================================================= */
 
     .monthly-cards {
         grid-template-columns:
@@ -1093,6 +1272,8 @@ body.dark-mode {
 
     .mini-card {
         padding: 12px;
+
+        border-radius: 10px;
     }
 
     .mini-card strong {
@@ -1100,7 +1281,9 @@ body.dark-mode {
     }
 
 
-    /* GRÁFICO */
+    /* =================================================
+       GRÁFICO
+    ================================================= */
 
     .monthly-content {
         grid-template-columns:
@@ -1117,6 +1300,8 @@ body.dark-mode {
         height: 200px;
 
         gap: 18px;
+
+        width: 100%;
     }
 
     .bar-container {
@@ -1128,7 +1313,26 @@ body.dark-mode {
     }
 
 
-    /* COMPARAÇÃO */
+    /* =================================================
+       RANKING
+    ================================================= */
+
+    .ranking-item {
+        gap: 8px;
+    }
+
+    .ranking-info strong {
+        max-width: 180px;
+    }
+
+    .ranking-value {
+        font-size: 13px;
+    }
+
+
+    /* =================================================
+       COMPARAÇÃO
+    ================================================= */
 
     .comparison-selectors {
         grid-template-columns:
@@ -1146,7 +1350,9 @@ body.dark-mode {
     }
 
 
-    /* TABELA */
+    /* =================================================
+       TABELA
+    ================================================= */
 
     .table-container {
         margin:
@@ -1156,23 +1362,22 @@ body.dark-mode {
             calc(100% + 10px);
     }
 
-
     table {
         min-width: 800px;
     }
-
-
-    /* COMPARAÇÃO */
 
     .comparison-table-container {
         overflow-x: auto;
     }
 
 
-    /* FOOTER */
+    /* =================================================
+       FOOTER
+    ================================================= */
 
     footer {
-        padding: 20px 10px;
+        padding:
+            20px 10px;
     }
 }
 
@@ -1183,30 +1388,55 @@ body.dark-mode {
 
 @media (max-width: 450px) {
 
+    .topbar-logo {
+        width: 36px;
+
+        height: 36px;
+    }
+
+    .topbar h1 {
+        font-size: 16px;
+    }
+
+    .topbar p {
+        font-size: 10px;
+    }
+
+    .theme-toggle {
+        padding:
+            9px 10px;
+
+        font-size: 12px;
+    }
+
+
     .dashboard {
         grid-template-columns:
             1fr 1fr;
     }
 
     .card {
-        min-height: 90px;
+        min-height: 88px;
 
-        padding: 12px;
+        padding: 11px;
     }
 
     .card strong {
-        font-size: 16px;
+        font-size: 15px;
     }
+
 
     .preview {
         grid-template-columns:
             1fr 1fr;
     }
 
+
     .monthly-cards {
         grid-template-columns:
             1fr 1fr;
     }
+
 
     .bar-group {
         gap: 12px;
@@ -1224,12 +1454,40 @@ body.dark-mode {
 
 @media (max-width: 360px) {
 
+    .topbar {
+        padding:
+            11px 3%;
+    }
+
+    .topbar-logo {
+        width: 32px;
+
+        height: 32px;
+    }
+
+    .topbar h1 {
+        font-size: 14px;
+    }
+
+    .topbar p {
+        display: none;
+    }
+
+    .theme-toggle {
+        font-size: 11px;
+
+        padding:
+            8px;
+    }
+
+
     .dashboard,
     .preview,
     .monthly-cards {
         grid-template-columns:
             1fr;
     }
+
 
     .bar {
         width: 30px;
@@ -1238,17 +1496,4 @@ body.dark-mode {
     .bar-group {
         gap: 8px;
     }
-
-}
-
-.card.gastos strong {
-    color: #dc2626;
-}
-
-.card.faturamento strong {
-    color: #2563eb;
-}
-
-.card.despesas strong {
-    color: #f97316;
 }
