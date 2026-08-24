@@ -150,7 +150,7 @@ body {
 
     box-shadow:
         0 3px 12px
-        rgba(0, 0, 0, .04);
+        rgba(179, 30, 30, 0.04);
 
     transition: .3s;
 }
@@ -1239,4 +1239,16 @@ body.dark-mode {
         gap: 8px;
     }
 
+}
+
+.card.gastos strong {
+    color: #dc2626;
+}
+
+.card.faturamento strong {
+    color: #2563eb;
+}
+
+.card.despesas strong {
+    color: #f97316;
 }
