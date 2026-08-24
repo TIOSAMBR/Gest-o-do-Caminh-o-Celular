@@ -1529,6 +1529,14 @@ function atualizarPainelPrincipal() {
         )
     );
 
+    atualizarElemento(
+    "totalGastos",
+    dinheiro(
+        dados.custosFretes +
+        dados.despesas
+    )
+);
+
 
     atualizarElemento(
         "totalLucro",
