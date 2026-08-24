@@ -37,30 +37,13 @@ body {
 
 .topbar {
     min-height: 90px;
-
     background: #ffffff;
-
-    border-bottom:
-        1px solid #e5e7eb;
-
-    padding:
-        16px 5%;
-
+    border-bottom: 1px solid #e5e7eb;
+    padding: 18px 5%;
     display: flex;
-
-    justify-content:
-        space-between;
-
-    align-items:
-        center;
-
+    justify-content: space-between;
+    align-items: center;
     gap: 20px;
-
-    position: sticky;
-
-    top: 0;
-
-    z-index: 100;
 }
 
 
