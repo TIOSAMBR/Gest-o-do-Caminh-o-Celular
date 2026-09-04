@@ -276,6 +276,76 @@ function dataHoje() {
 
 
 // =====================================================
+// DADOS DO MÊS ATUAL
+// =====================================================
+// Os dados antigos continuam salvos para o Resumo/Análise
+// mensal e para a comparação entre meses.
+// A tela operacional mostra somente o mês atual.
+
+function obterDadosMesSelecionado() {
+    // Usa o seletor principal de mês que fica no topo da página
+    const seletor = document.getElementById("mesPrincipal");
+
+    const periodo =
+        seletor && seletor.value
+            ? seletor.value
+            : obterMesAtual();
+
+    return {
+        periodo,
+
+        // Mostra somente os fretes do mês selecionado
+        fretes: fretes.filter(frete =>
+            frete.data &&
+            frete.data.startsWith(periodo)
+        ),
+
+        // Mostra somente as despesas do mês selecionado
+        despesas: despesas.filter(despesa =>
+            despesa.data &&
+            despesa.data.startsWith(periodo)
+        )
+    };
+}
+
+
+// Atualiza os históricos imediatamente quando o mês do topo é alterado.
+
+function atualizarHistoricosAoTrocarMes() {
+    const seletor = document.getElementById("mesPrincipal");
+
+    if (!seletor) {
+        return;
+    }
+
+    // Quando o mês principal mudar,
+    // atualiza os dois históricos
+    seletor.addEventListener("change", function () {
+
+        // Histórico de fretes
+        atualizarTabela();
+
+        // Histórico de despesas
+        atualizarTabelaDespesas();
+
+    });
+
+    // Carrega os dados do mês selecionado
+    // assim que a página abrir
+    atualizarTabela();
+    atualizarTabelaDespesas();
+}
+
+
+
+// Mantém compatibilidade com qualquer parte do sistema que ainda
+// utilize o nome antigo.
+function obterDadosMesAtual() {
+    return obterDadosMesSelecionado();
+}
+
+
+// =====================================================
 // DATA ATUAL
 // =====================================================
 
@@ -1047,8 +1117,11 @@ function atualizarTabela() {
 
     tabela.innerHTML = "";
 
+    const dadosMesAtual = obterDadosMesAtual();
+    const fretesMesAtual = dadosMesAtual.fretes;
 
-    if (fretes.length === 0) {
+
+    if (fretesMesAtual.length === 0) {
 
         if (semFretes)
             semFretes.style.display = "block";
@@ -1063,7 +1136,7 @@ function atualizarTabela() {
 
 
     const ordenados =
-        [...fretes].sort(
+        [...fretesMesAtual].sort(
             (a, b) =>
                 new Date(b.data) -
                 new Date(a.data)
@@ -1190,8 +1263,11 @@ function atualizarTabelaDespesas() {
 
     tabela.innerHTML = "";
 
+    const dadosMesAtual = obterDadosMesAtual();
+    const despesasMesAtual = dadosMesAtual.despesas;
 
-    if (despesas.length === 0) {
+
+    if (despesasMesAtual.length === 0) {
 
         if (vazio)
             vazio.style.display = "block";
@@ -1206,7 +1282,7 @@ function atualizarTabelaDespesas() {
 
 
     const ordenadas =
-        [...despesas].sort(
+        [...despesasMesAtual].sort(
             (a, b) =>
                 new Date(b.data) -
                 new Date(a.data)
@@ -2967,4 +3043,14 @@ function restaurarBackup(event) {
         arquivo
     );
 
+}
+
+// Ativa o filtro mensal dos históricos.
+if (document.readyState === "loading") {
+    document.addEventListener(
+        "DOMContentLoaded",
+        atualizarHistoricosAoTrocarMes
+    );
+} else {
+    atualizarHistoricosAoTrocarMes();
 }
